@@ -1,13 +1,33 @@
+ /*Estilos generales para todos los componentes*/
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar.jsx';
 import ItemListContainer from './components/ItemListContainer.jsx';
+import ItemDetailContainer from './components/ItemDetailContainer.jsx';
+import NotFound from './components/NotFound.jsx';
+import Footer from './components/Footer.jsx';
 import './App.css';
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <NavBar />
-      <ItemListContainer saludo="¡Bienvenido a Elite Notebooks!" />
-    </>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <section className="hero">
+              <h1>Bienvenido a Elite Notebooks</h1>
+              <p>Las mejores notebooks de alta gama para profesionales y gamers en Argentina.</p>
+            </section>
+            <ItemListContainer saludo="CATÁLOGO PRINCIPAL" />
+          </>
+        } />
+        <Route path="/category/:category" element={<ItemListContainer saludo="Catálogo filtrado" />} />
+        <Route path="/item/:id" element={<ItemDetailContainer />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
