@@ -1,15 +1,16 @@
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CartDropdown = ({ onClose }) => {
   const { cart, removeFromCart, clearCart } = useCart();
   const [compraOk, setCompraOk] = useState(false);
   const total = cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+  const navigate = useNavigate();
 
-  const handleConfirmar = () => {
-    setCompraOk(true);
-    clearCart();
-    setTimeout(() => setCompraOk(false), 2500);
+  const handleCheckout = () => {
+    onClose && onClose();
+    navigate('/checkout');
   };
 
   return (
@@ -21,7 +22,17 @@ const CartDropdown = ({ onClose }) => {
           ¡Gracias por tu compra, ha sido realizada con éxito!
         </div>
       ) : cart.length === 0 ? (
-        <p>El carrito está vacío.</p>
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '2rem 1rem',
+          color: 'var(--color-text)'
+        }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛒</div>
+          <p style={{ margin: 0, fontSize: '1.1rem' }}>Carrito vacío</p>
+          <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', opacity: 0.7 }}>
+            Agrega productos para comenzar
+          </p>
+        </div>
       ) : (
         <>
           <ul className="cart-list">
@@ -38,7 +49,7 @@ const CartDropdown = ({ onClose }) => {
           <div className="cart-total">Total: {total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</div>
           <div className="cart-actions">
             <button onClick={clearCart} className="cart-btn cart-btn-left">Vaciar carrito</button>
-            <button onClick={handleConfirmar} className="cart-btn cart-btn-right">Confirmar compra</button>
+            <button onClick={handleCheckout} className="cart-btn cart-btn-right">Confirmar compra</button>
           </div>
         </>
       )}

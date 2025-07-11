@@ -36,7 +36,7 @@ const NavBar = () => {
           >
             Categorías
           </button>
-          {showMenu && <CategoriasMenu />}
+          {showMenu && <CategoriasMenu onSelectCategoria={() => setShowMenu(false)} />}
         </div>
       </div>
       <button className="toggle-theme-btn-abs" onClick={toggleTheme} title="Cambiar modo">

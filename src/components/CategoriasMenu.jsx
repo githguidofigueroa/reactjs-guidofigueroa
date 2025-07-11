@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { categorias } from '../data';
 
-const CategoriasMenu = () => {
+const CategoriasMenu = ({ onSelectCategoria }) => {
   return (
     <ul className="lista-categorias categorias-menu">
       {categorias.map((cat) => (
@@ -9,6 +9,7 @@ const CategoriasMenu = () => {
           <Link 
             to={`/category/${cat.id}`}
             className="categoria-link"
+            onClick={onSelectCategoria}
           >
             {cat.nombre}
           </Link>
